@@ -9,9 +9,6 @@
 <body>
     <div class="container">
         <h1>Лабораторная работа №1</h1>
-        <h2>Доменные имена, хостинг, веб-сервер</h2>
-        <p class="student">Студент: u82462 (логин на сервере kubsu-dev.ru)</p>
-
         <section>
             <h3>1. Подключение к учебному серверу по SSH</h3>
             <div class="screenshot">
@@ -36,7 +33,7 @@
             <h3>3. Получение A и MX записей доменов (nslookup)</h3>
             <div class="screenshot">
                 <img src="screenshots/aweb3.png" alt="nslookup A kubsu.ru">
-                <p>Команда <code>nslookup -type=A kubsu.ru</code> (на скриншоте также виден предыдущий ping). A-запись домена kubsu.ru указывает на IP <strong>185.13.84.92</strong>.</p>
+                <p>Команда <code>nslookup -type=A kubsu.ru</code> . A-запись домена kubsu.ru указывает на IP <strong>185.13.84.92</strong>.</p>
             </div>
             <div class="screenshot">
                 <img src="screenshots/aweb4.png" alt="nslookup MX kubsu.ru">
@@ -59,25 +56,76 @@
                 <p>Данные whois для домена kubsu.ru: дата регистрации <strong>1998-03-28</strong>, оплачен до <strong>2026-04-30</strong>, регистратор RU-CENTER-RU.</p>
             </div>
             <div class="screenshot">
-                <img src="screenshots/aweb8.png" alt="whois kubsu.ru и kubsu-dev.ru">
-                <p>На этом скриншоте — вывод whois для kubsu.ru (повтор) и для kubsu-dev.ru. Домен kubsu-dev.ru зарегистрирован <strong>2020-02-12</strong>, оплачен до <strong>2027-02-12</strong>, регистратор WEBNAMES-RU.</p>
+                <img src="screenshots/aweb8.png" alt="whois kubsu-dev.ru">
+                <p>Домен kubsu-dev.ru зарегистрирован <strong>2020-02-12</strong>, оплачен до <strong>2027-02-12</strong>, регистратор WEBNAMES-RU.</p>
             </div>
         </section>
 
         <section>
             <h3>5. Создание веб-страницы и публикация через Git</h3>
-            <p>Локально создан репозиторий Git, в который добавлены файл <code>index.html</code> со скриншотами, папка <code>screenshots</code> и файл стилей <code>style.css</code>. Выполнен коммит и push в удалённый репозиторий. На сервере <code>kubsu-dev.ru</code> репозиторий склонирован в каталог <code>~/www/lab1/</code>. Страница доступна по адресу: <a href="http://u82462.kubsu-dev.ru/lab1/">http://u82462.kubsu-dev.ru/lab1/</a>.</p>
+
+            <h4>5.1. Клонирование репозитория (по HTTPS)</h4>
+            <div class="screenshot">
+                 <img src="screenshots/ARTEM.png" alt="git clone SSH">
+                <p>На сервере выполняется клонирование репозитория <code>https://github.com/abbasovaaisha/web2.1.git</code>. Репозиторий содержит файлы лабораторной работы.</p>
+            </div>
+
+            <h4>5.2. Размещение файлов в каталоге www</h4>
+            <div class="screenshot">
+                <img src="screenshots/2.png" alt="mkdir and cp">
+                <p>Создаётся целевой каталог <code>~/www/hw1</code>, затем все файлы из клонированного репозитория копируются в него. Проверка командой <code>ls</code> показывает наличие <code>index.html</code>, <code>screenshots</code> и <code>style.css</code>.</p>
+            </div>
+
+            <h4>5.3. Настройка SSH-ключа для доступа к GitHub</h4>
+            <div class="screenshot">
+                <img src="screenshots/5.1.png" alt="mkdir .ssh">
+                <p>Создание каталога <code>~/.ssh</code> и установка прав <code>700</code> для безопасного хранения ключей.</p>
+            </div>
+            <div class="screenshot">
+                <img src="screenshots/5.2.png" alt="ssh-keygen">
+                <p>Генерация пары ключей ED25519 с комментарием <code>abbasovaisha@icloud.com</code>. Ключи сохранены в <code>/home/u82462/.ssh/id_ed25519</code> (приватный) и <code>.pub</code> (публичный).</p>
+            </div>
+            <div class="screenshot">
+                <img src="screenshots/5.3.png" alt="cat public key">
+                <p>Просмотр содержимого публичного ключа. Этот ключ необходимо добавить в настройках GitHub (Settings → SSH and GPG keys).</p>
+            </div>
+
+
+            <h4>5.4. Обновление репозитория на сервере</h4>
+            <div class="screenshot">
+                <img src="screenshots/5.5.png" alt="git pull">
+                <p>После добавления новых скриншотов в локальный репозиторий и пуша на GitHub, на сервере выполняется <code>git pull</code> для получения обновлений. Видно, что добавились файлы <code>1.png</code>, <code>2.png</code>, <code>3.png</code>, <code>4.png</code>, <code>5.1.png</code>, <code>5.2.png</code>, <code>5.3.png</code>, <code>5.png</code>, <code>ARTEM.png</code>, <code>PPP.png</code>. Затем изменения копируются в <code>~/www/hw1</code> командой <code>cp</code>.</p>
+            </div>
+
+            <h4>5.5. Состояние репозитория на GitHub</h4>
+            <div class="screenshot">
+                <img src="screenshots/PPP.png" alt="GitHub repo">
+                <p>Скриншот веб-интерфейса репозитория <code>web2.1</code>. Видны папка <code>screenshots</code>, файлы <code>index.html</code> и <code>style.css</code>, а также последний коммит "Add files via upload".</p>
+            </div>
+
+            <h4>5.6. Готовая веб-страница</h4>
+            <p>Файлы успешно размещены в каталоге <code>~/www/hw1</code>. Страница доступна по адресу: <a href="http://u82462.kubsu-dev.ru/hw1/">http://u82462.kubsu-dev.ru/hw1/</a> (замените <code>hw1</code> на фактическое имя каталога, если отличается).</p>
         </section>
 
         <section>
             <h3>6. Копирование файлов через SFTP</h3>
-            <p>С помощью SFTP-клиента (FileZilla) выполнено подключение к серверу <code>kubsu-dev.ru</code> под логином u82462. Файлы из каталога <code>~/www/lab1/</code> скопированы на локальный компьютер. Скриншот клиента после успешной загрузки будет добавлен после выполнения этого шага.</p>
-            <!--
             <div class="screenshot">
-                <img src="screenshots/sftp.png" alt="SFTP-клиент">
-                <p>FileZilla после завершения копирования: локальная папка содержит все файлы лабораторной работы.</p>
+                <img src="screenshots/3.png" alt="FileZilla подключение">
+                <p>Настройка подключения в FileZilla: хост <code>kubsu-dev.ru</code>, порт <strong>58528</strong>, протокол SFTP, пользователь u82462.</p>
             </div>
-            -->
+            <div class="screenshot">
+                <img src="screenshots/4.png" alt="FileZilla успешная передача">
+                <p>После подключения отображается список файлов на сервере (в правой панели) и на локальной машине (в левой панели). Статус показывает успешное соединение и получение списка каталогов. Файлы лабораторной работы (папка <code>web2.1</code> и <code>www</code>) видны на сервере. Для завершения задания необходимо скачать папку <code>hw1</code> или <code>web2.1</code> на локальный компьютер. На скриншоте передача ещё не начата, но соединение установлено.</p>
+   <img src="screenshots/5.png" alt="FileZilla успешная передача">
+   <p> после скачивания файлов на локальный компьютер будет добавлен дополнительный скриншот с подтверждением успешной передачи.</p>
+  <h4>6.1 Обновление репозитория на сервере</h4>
+            <div class="screenshot">
+                <img src="screenshots/5.5.png" alt="git pull">
+                <p>После добавления новых скриншотов в локальный репозиторий и пуша на GitHub, на сервере выполняется <code>git pull</code> для получения обновлений. Видно, что добавились файлы <code>1.png</code>, <code>2.png</code>, <code>3.png</code>, <code>4.png</code>, <code>5.1.png</code>, <code>5.2.png</code>, <code>5.3.png</code>, <code>5.png</code>, <code>ARTEM.png</code>, <code>PPP.png</code>. Затем изменения копируются в <code>~/www/hw1</code> командой <code>cp</code>.</p>
+            </div>
+      
+</div>
+            
         </section>
     </div>
 </body>
